@@ -50,7 +50,7 @@ jobs:
       - name: test changed packages
         run: yarn test:all --maxWorkers=3
 
-            - name: ensure clean working directory
+      - name: ensure clean working directory
         run: |
           if files=$(git ls-files --exclude-standard --others --modified) && [[ -z "$files" ]]; then
             exit 0
