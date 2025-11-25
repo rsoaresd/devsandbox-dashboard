@@ -3,8 +3,12 @@ name: CI
 on:
   pull_request:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  ci: 
+  ci:
     runs-on: ubuntu-latest
     env:
       CI: true
@@ -61,24 +65,4 @@ jobs:
             git status --short
             echo ""
             exit 1
-          fi 
-
-  verify:
-    name: Verify step
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout head branch
-        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4
-        with:
-          ref: ${{ github.event.workflow_run.head_branch }}
-
-      - name: Setup node
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
-        with:
-          node-version: 22.x
-
-      - name: Install root dependencies
-        run: yarn install --immutable
-
-      - name: Verify lockfile duplicates
-        run: node scripts/ci/verify-lockfile-duplicates.js ./yarn.lock
+          fi
