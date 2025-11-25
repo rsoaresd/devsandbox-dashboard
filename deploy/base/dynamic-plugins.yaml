@@ -71,10 +71,6 @@ plugins:
                     title: Settings
                     link: /settings
                     icon: manageAccounts
-              - mountPoint: global.header/profile
-                importName: LogoutButton
-                config:
-                  priority: 10
 
   # Techdocs
   - package: ./dynamic-plugins/dist/backstage-plugin-techdocs-backend-dynamic
